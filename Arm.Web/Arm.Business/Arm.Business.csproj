@@ -41,6 +41,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="EnquiryService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Arm.Entities\Arm.Entities.csproj">
+      <Project>{668cd949-27c3-47cb-b22d-875e5896a635}</Project>
+      <Name>Arm.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Arm.Data\Arm.Data.csproj">
+      <Project>{8f03ed24-287d-41f1-a5ba-8cbefea47fdc}</Project>
+      <Name>Arm.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -12,13 +12,29 @@ namespace Arm.Web.Controllers
     using System.Linq;
     using System.Web.Mvc;
 
-    using Arm.Web.Models;
-
+    using Arm.Business;
+    using Arm.Entities.Models;
+   
     /// <summary>
     /// The home controller.
     /// </summary>
     public class HomeController : Controller
     {
+        /// <summary>
+        /// The enquiry service.
+        /// </summary>
+        private readonly EnquiryService enquiryService;
+
+        // todo: these dependencies(for other projects as well) can be injected using DI container for ex,unity
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HomeController"/> class.
+        /// </summary>
+        public HomeController()
+        {
+            this.enquiryService = new EnquiryService();
+        }
+
         /// <summary>
         /// The index.
         /// </summary>
@@ -29,9 +45,7 @@ namespace Arm.Web.Controllers
         {
             var priceEnquiryViewModel = new PriceEnquiryViewModel();
 
-            // todo:remove these hardcoded products list to take from DB
-            priceEnquiryViewModel.Products.Add(new ProductModel { Name = "Product1", ProductId = 1 });
-            priceEnquiryViewModel.Products.Add(new ProductModel { Name = "Product2", ProductId = 2 });
+            priceEnquiryViewModel.Products = this.enquiryService.Products().ToList();
             this.ViewBag.ShowMessage = false;
             return this.View(priceEnquiryViewModel);
         }
@@ -62,10 +76,7 @@ namespace Arm.Web.Controllers
             }
 
             this.ViewBag.ShowMessage = false;
-
-            // todo:remove these hardcoded products list to take from DB
-            priceEnquiryViewModel.Products.Add(new ProductModel { Name = "Product1", ProductId = 1 });
-            priceEnquiryViewModel.Products.Add(new ProductModel { Name = "Product2", ProductId = 2 });
+            priceEnquiryViewModel.Products = this.enquiryService.Products().ToList();
             return this.View(priceEnquiryViewModel);
         }
     }
