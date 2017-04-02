@@ -181,13 +181,13 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Arm.Business\Arm.Business.csproj">
+      <Project>{feb1084e-e2b8-42a9-9f9e-206f28a14e0b}</Project>
+      <Name>Arm.Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Arm.Entities\Arm.Entities.csproj">
       <Project>{668cd949-27c3-47cb-b22d-875e5896a635}</Project>
       <Name>Arm.Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Arm.Business\Arm.Business.csproj">
-      <Project>{feb1084e-e2b8-42a9-9f9e-206f28a14e0b}</Project>
-      <Name>Arm.Business</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
