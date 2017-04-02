@@ -46,7 +46,7 @@ namespace Arm.Web.Controllers
             var priceEnquiryViewModel = new PriceEnquiryViewModel();
 
             priceEnquiryViewModel.Products = this.enquiryService.Products().ToList();
-            this.ViewBag.ShowMessage = false;
+            this.ViewBag.ShowSuccessMessage = false;
             return this.View(priceEnquiryViewModel);
         }
 
@@ -66,18 +66,33 @@ namespace Arm.Web.Controllers
             {
                 if (priceEnquiryViewModel.SelectedProducts != null && priceEnquiryViewModel.SelectedProducts.Any())
                 {
-                    // todo:call save to db and send message 
-                    this.ViewBag.ShowMessage = true;
+                    // todo:call send message 
+                    if (this.enquiryService.SubmitEnquiry(priceEnquiryViewModel))
+                    {
+                        this.ViewBag.ShowSuccessMessage = true;
+                    }
+                    else
+                    {
+                        this.ViewBag.ShowSuccessMessage = false;
+                        priceEnquiryViewModel.Products = this.enquiryService.Products().ToList();
+                    }
+
+                    return this.View(priceEnquiryViewModel);
                 }
                 else
                 {
                     this.ModelState.AddModelError("productSelection", "Please select at least one product");
+                    this.ViewBag.ShowSuccessMessage = false;
+                    priceEnquiryViewModel.Products = this.enquiryService.Products().ToList();
+                    return this.View(priceEnquiryViewModel);
                 }
             }
-
-            this.ViewBag.ShowMessage = false;
-            priceEnquiryViewModel.Products = this.enquiryService.Products().ToList();
-            return this.View(priceEnquiryViewModel);
+            else
+            {
+                this.ViewBag.ShowSuccessMessage = false;
+                priceEnquiryViewModel.Products = this.enquiryService.Products().ToList();
+                return this.View(priceEnquiryViewModel);
+            }
         }
     }
 }
