@@ -25,6 +25,11 @@ namespace Arm.Web.Controllers
         /// </summary>
         private readonly EnquiryService enquiryService;
 
+        /// <summary>
+        /// The utilities.
+        /// </summary>
+        private readonly Utilities utilities;
+
         // todo: these dependencies(for other projects as well) can be injected using DI container for ex,unity
 
         /// <summary>
@@ -33,6 +38,7 @@ namespace Arm.Web.Controllers
         public HomeController()
         {
             this.enquiryService = new EnquiryService();
+            this.utilities = new Utilities();
         }
 
         /// <summary>
@@ -67,12 +73,13 @@ namespace Arm.Web.Controllers
                 if (priceEnquiryViewModel.SelectedProducts != null && priceEnquiryViewModel.SelectedProducts.Any())
                 {
                     // todo:call send message 
-                    if (this.enquiryService.SubmitEnquiry(priceEnquiryViewModel))
+                    if (this.enquiryService.SubmitEnquiry(priceEnquiryViewModel) && this.utilities.SendEmail(priceEnquiryViewModel))
                     {
                         this.ViewBag.ShowSuccessMessage = true;
                     }
                     else
                     {
+                        this.ModelState.AddModelError("failed", "There was some issue.Please try again");
                         this.ViewBag.ShowSuccessMessage = false;
                         priceEnquiryViewModel.Products = this.enquiryService.Products().ToList();
                     }

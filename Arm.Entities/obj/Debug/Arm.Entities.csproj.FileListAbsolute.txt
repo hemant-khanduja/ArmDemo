@@ -1,0 +1,5 @@
+C:\rnd\ARM\Arm.Entities\bin\Debug\Arm.Entities.dll
+C:\rnd\ARM\Arm.Entities\bin\Debug\Arm.Entities.pdb
+C:\rnd\ARM\Arm.Entities\obj\Debug\Arm.Entities.csprojResolveAssemblyReference.cache
+C:\rnd\ARM\Arm.Entities\obj\Debug\Arm.Entities.dll
+C:\rnd\ARM\Arm.Entities\obj\Debug\Arm.Entities.pdb

@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ArmCustomModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="EnquiryUser">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="First_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Last_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Address_Line_1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Address_Line_2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PostCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Products" Relationship="ArmCustomModel.EnquiryUserJunctionProduct" FromRole="EnquiryUser" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ProductId" />
+    </Key>
+    <Property Name="ProductId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="EnquiryUsers" Relationship="ArmCustomModel.EnquiryUserJunctionProduct" FromRole="Product" ToRole="EnquiryUser" />
+  </EntityType>
+  <EntityContainer Name="ArmCustomEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="EnquiryUsers" EntityType="Self.EnquiryUser" />
+    <EntitySet Name="Products" EntityType="Self.Product" />
+    <AssociationSet Name="EnquiryUserJunctionProduct" Association="ArmCustomModel.EnquiryUserJunctionProduct">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="EnquiryUser" EntitySet="EnquiryUsers" />
+    </AssociationSet>
+  </EntityContainer>
+  <Association Name="EnquiryUserJunctionProduct">
+    <End Type="ArmCustomModel.Product" Role="Product" Multiplicity="*" />
+    <End Type="ArmCustomModel.EnquiryUser" Role="EnquiryUser" Multiplicity="*" />
+  </Association>
+</Schema>

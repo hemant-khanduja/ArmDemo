@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ArmCustomModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="EnquiryUser">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="First Name" Type="varchar" MaxLength="50" />
+    <Property Name="Last Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Address Line 1" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Address Line 2" Type="varchar" MaxLength="50" />
+    <Property Name="City" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PostCode" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Country" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Phone" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EnquiryUserJunctionProduct">
+    <Key>
+      <PropertyRef Name="ProductId" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="ProductId" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ProductId" />
+    </Key>
+    <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_product">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="EnquiryUserJunctionProduct" Type="Self.EnquiryUserJunctionProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="EnquiryUserJunctionProduct">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_user">
+    <End Role="EnquiryUser" Type="Self.EnquiryUser" Multiplicity="1" />
+    <End Role="EnquiryUserJunctionProduct" Type="Self.EnquiryUserJunctionProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EnquiryUser">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="EnquiryUserJunctionProduct">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ArmCustomModelStoreContainer">
+    <EntitySet Name="EnquiryUser" EntityType="Self.EnquiryUser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EnquiryUserJunctionProduct" EntityType="Self.EnquiryUserJunctionProduct" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_product" Association="Self.FK_product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="EnquiryUserJunctionProduct" EntitySet="EnquiryUserJunctionProduct" />
+    </AssociationSet>
+    <AssociationSet Name="FK_user" Association="Self.FK_user">
+      <End Role="EnquiryUser" EntitySet="EnquiryUser" />
+      <End Role="EnquiryUserJunctionProduct" EntitySet="EnquiryUserJunctionProduct" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
